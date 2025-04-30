@@ -1,0 +1,14 @@
+version: '3.9'
+services:
+  postgres:
+    image: postgres:16
+    container_name: qa-sandbox-postgres   # możesz zmienić, jeśli chcesz
+    restart: unless-stopped
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: qa_user
+      POSTGRES_PASSWORD: secret
+      POSTGRES_DB: qa_sandbox
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql:ro

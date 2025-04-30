@@ -1,0 +1,23 @@
+{
+  "name": "qa-sandbox",
+  "version": "1.0.0",
+  "description": "Full QA Flow Simulation (UI + API + DB + Performance)",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "cy:open": "cypress open",
+    "db:up": "docker compose -f db/docker-compose.yml up -d",
+    "db:down": "docker compose -f db/docker-compose.yml down --volumes"
+  },
+  "author": "Andrzej Majcher",
+  "license": "ISC",
+  "devDependencies": {
+    "cypress": "^14.3.2"
+  },
+  "dependencies": {
+    "pg": "^8.15.6"
+  }
+}
