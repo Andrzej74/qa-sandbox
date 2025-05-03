@@ -23,7 +23,7 @@ jobs:
         node-version: 20
 
     - name: Install dependencies
-      run: npm run ci
+      run: npm ci
 
     - name: Start local UI server
       run: npx http-server ui -p 5500 &
