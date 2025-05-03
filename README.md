@@ -15,6 +15,22 @@
 
 ## Quick Start
 
+1. `git clone …`
+2. `cp .env.example .env && echo \"REQRES_API_KEY=reqres-free-v1\" >> .env`
+3. `npm i`
+4. `npm run db:up`
+5. `npm run cy:open`
+
+## Reqres API Key
+
+As of 2025, Reqres requires an API key to access all endpoints.
+
+1. Go to [https://reqres.in/signup].
+2. Use the default key: `reqres-free-v1`
+3. Create a `.env` file in the project root with the following:
+REQRES_API_KEY=reqres-free-v1
+4. This key is automatically used in the UI and Cypress tests.
+
 ### 1. Requirements
 
 The following tools are required to run the core test suites:
@@ -47,6 +63,14 @@ docker ps
 # should show: qa-sandbox-postgres
 ```
 
+### 4. Run UI tests (Cypress)
+```bash
+npm run cy:open
+```
+Select a test and run it via the GUI, or use headless mode:
+```bash
+npm run cy:run
+```
 
 ## Reports
 

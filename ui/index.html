@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <title>QA Sandbox UI</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+</head>
+<body class="container py-4">
+  <h1 class="mb-4">QA Sandbox – Reqres Demo</h1>
+
+  <!-- Register ---------->
+  <form id="registerForm" class="mb-3" data-cy="register-form">
+    <h4>Rejestracja</h4>
+    <input class="form-control mb-2" type="email"  placeholder="email"    id="regEmail"    required data-cy="reg-email">
+    <input class="form-control mb-2" type="password" placeholder="hasło"   id="regPassword" required data-cy="reg-pass">
+    <button class="btn btn-primary">Zarejestruj</button>
+    <small id="regResult" class="ms-2 text-success" data-cy="reg-result"></small>
+  </form>
+
+  <!-- Login ------------->
+  <form id="loginForm" class="mb-3" data-cy="login-form">
+    <h4>Logowanie</h4>
+    <input class="form-control mb-2" type="email"  placeholder="email"    id="logEmail"    required data-cy="log-email">
+    <input class="form-control mb-2" type="password" placeholder="hasło"   id="logPassword" required data-cy="log-pass">
+    <button class="btn btn-success">Zaloguj</button>
+    <small id="logResult" class="ms-2 text-success" data-cy="log-result"></small>
+  </form>
+
+  <!-- Users list -------->
+  <button id="getUsers" class="btn btn-outline-secondary mb-2" data-cy="get-users">Pobierz użytkowników</button>
+  <table class="table table-sm" id="usersTable" data-cy="users-table">
+    <thead><tr><th>ID</th><th>Imię</th><th>Nazwisko</th><th>Email</th></tr></thead>
+    <tbody></tbody>
+  </table>
+
+<script>
+const apiKey = 'reqres-free-v1'; // docelowo z .env przez bundler
+const base = 'https://reqres.in/api';
+const opts = {
+  headers: {
+    'Content-Type': 'application/json',
+    'x-api-key': apiKey
+  }
+};
+
+async function post(endpoint, body) {
+  const res = await fetch(`${base}/${endpoint}`, {
+    ...opts,
+    method: 'POST',
+    body: JSON.stringify(body)
+  });
+  return res.json();
+}
+
+document.getElementById('registerForm').addEventListener('submit', async e=>{
+  e.preventDefault();
+  const email = regEmail.value, password = regPassword.value;
+  const data = await post('register',{email,password});
+  regResult.textContent = data.token ? `token: ${data.token}` : data.error;
+});
+
+document.getElementById('loginForm').addEventListener('submit', async e=>{
+  e.preventDefault();
+  const email = logEmail.value, password = logPassword.value;
+  const data = await post('login',{email,password});
+  logResult.textContent = data.token ? `token: ${data.token}` : data.error;
+});
+
+document.getElementById('getUsers').addEventListener('click', async()=>{
+  const res = await fetch(`${base}/users?page=1`, {
+    ...opts,
+  });
+  const {data} = await res.json();
+  const tbody = usersTable.querySelector('tbody');
+  tbody.innerHTML = '';
+  data.forEach(u=>{
+    tbody.insertAdjacentHTML('beforeend',`
+      <tr><td>${u.id}</td><td>${u.first_name}</td><td>${u.last_name}</td><td>${u.email}</td></tr>`);
+  });
+});
+</script>
+</body>
+</html>
