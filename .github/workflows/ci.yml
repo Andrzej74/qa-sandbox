@@ -23,7 +23,10 @@ jobs:
         node-version: 20
 
     - name: Install dependencies
-      run: npm ci
+      run: npm run ui &
+
+    - name: Start local UI server
+      run: npx http-server ui -p 5500 &
 
     - name: Run Cypress tests
       run: npx cypress run

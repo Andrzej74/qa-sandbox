@@ -8,6 +8,7 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "ui": "http-server ui -p 5500",
     "cy:open": "cypress open",
     "db:up": "docker compose -f db/docker-compose.yml up -d",
     "db:down": "docker compose -f db/docker-compose.yml down --volumes"
@@ -15,7 +16,8 @@
   "author": "Andrzej Majcher",
   "license": "ISC",
   "devDependencies": {
-    "cypress": "^14.3.2"
+    "cypress": "^14.3.2",
+    "http-server": "^14.1.1"
   },
   "dependencies": {
     "pg": "^8.15.6"

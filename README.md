@@ -66,7 +66,12 @@ docker ps
 # should show: qa-sandbox-postgres
 ```
 
-### 4. Run UI tests (Cypress)
+### 4. Run the UI:
+```bash
+npm run ui
+```
+
+### 5. Run UI tests (Cypress)
 ```bash
 npm run cy:open
 ```
