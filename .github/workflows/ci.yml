@@ -1,0 +1,50 @@
+name: qa-sandbox-ci
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    env:
+      REQRES_API_KEY: ${{ secrets.REQRES_API_KEY }}
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: Setup Node
+      uses: actions/setup-node@v4
+      with:
+        node-version: 20
+
+    - name: Install dependencies
+      run: npm ci
+
+    - name: Run Cypress tests
+      run: npx cypress run
+      env:
+        NODE_OPTIONS: --max-old-space-size=4096
+
+    - name: Upload Cypress results
+      uses: actions/upload-artifact@v4
+      with:
+        name: cypress-results
+        path: cypress/results
+
+    - name: Run Newman tests
+      run: |
+        npm i -g newman
+        newman run api/Reqres.postman_collection.json \
+          -e api/sandbox-local.postman_environment.json \
+          -r cli,html --reporter-html-export newman/report.html
+
+    - name: Upload Newman report
+      uses: actions/upload-artifact@v4
+      with:
+        name: newman-report
+        path: newman/report.html

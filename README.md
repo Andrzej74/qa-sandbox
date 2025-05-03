@@ -1,4 +1,7 @@
 # QA Sandbox Project – Full QA Flow Simulation (UI + API + DB + Performance)
+
+![CI](https://github.com/andrzej74/qa-sandbox/actions/workflows/ci.yml/badge.svg)
+
 ## Educational project simulating a full end-to-end QA process including **manual testing**, **test automation**, **API validation**, **SQL checks**, and **performance monitoring**. Built as a sandbox to demonstrate testing skills.
 
 ## Tech stack
