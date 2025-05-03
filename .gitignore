@@ -4,3 +4,6 @@ node_modules/
 /reports/
 dev-notes.md
 .env
+allure-results
+allure-report
+newman/allure-report

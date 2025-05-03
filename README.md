@@ -1,6 +1,7 @@
 # QA Sandbox Project – Full QA Flow Simulation (UI + API + DB + Performance)
 
 ![CI](https://github.com/andrzej74/qa-sandbox/actions/workflows/ci.yml/badge.svg)
+[![Allure](https://img.shields.io/badge/Allure-available-blue)](https://github.com/andrzej74/qa-sandbox/actions)
 
 ## Educational project simulating a full end-to-end QA process including **manual testing**, **test automation**, **API validation**, **SQL checks**, and **performance monitoring**. Built as a sandbox to demonstrate testing skills.
 
@@ -80,6 +81,30 @@ Select a test and run it via the GUI, or use headless mode:
 npm run cy:run
 ```
 
-## Reports
+### 6. Run API tests (Newman)
+```bash
+npm run api:test
+``` 
+## 📊 Reports
 
-to do
+### Cypress + API (Allure)
+
+Cypress and Newman are integrated with [Allure](https://docs.qameta.io/allure/) for rich test reporting.
+
+To generate and open the report locally:
+
+```bash
+# for Cypress
+allure generate cypress/results --clean -o allure-report
+allure open allure-report
+
+# for Newman (API)
+allure generate newman/allure-results --clean -o newman/allure-report
+allure open newman/allure-report
+```
+
+To use Allure, install:
+```bash
+npm i -D @shelex/cypress-allure-plugin
+npm i -g allure-commandline
+```
