@@ -1,7 +1,7 @@
 # QA Sandbox Project – Full QA Flow Simulation (UI + API + DB + Performance)
 
 ![CI](https://github.com/andrzej74/qa-sandbox/actions/workflows/ci.yml/badge.svg)
-[![Allure](https://img.shields.io/badge/Allure-available-blue)](https://github.com/andrzej74/qa-sandbox/actions)
+[![Allure (Cypress)](https://img.shields.io/badge/Allure-Cypress-green)](https://github.com/andrzej74/qa-sandbox/actions)
 
 ## Educational project simulating a full end-to-end QA process including **manual testing**, **test automation**, **API validation**, **SQL checks**, and **performance monitoring**. Built as a sandbox to demonstrate testing skills.
 
@@ -85,26 +85,40 @@ npm run cy:run
 ```bash
 npm run api:test
 ``` 
-## 📊 Reports
+## Reports
 
 ### Cypress + API (Allure)
 
-Cypress and Newman are integrated with [Allure](https://docs.qameta.io/allure/) for rich test reporting.
-
-To generate and open the report locally:
-
+To generate and view an Allure report for Cypress tests:
+### 1. Install Allure CLI (once per machine):
 ```bash
-# for Cypress
-allure generate cypress/results --clean -o allure-report
-allure open allure-report
-
-# for Newman (API)
-allure generate newman/allure-results --clean -o newman/allure-report
-allure open newman/allure-report
+npm i -g allure-commandline
+```
+### 2. Run tests and generate results:
+```bash
+npx cypress run --env allure=true
+```
+### 3. Generate and open the report:
+```bash
+allure generate allure-results -o _allure-report --clean
+allure open _allure-report
 ```
 
-To use Allure, install:
+Test results are uploaded automatically as artifacts in GitHub Actions:
+
+|Source         |Artifact name   | Format          |
+|---------------|----------------|-----------------|
+|Cypress (UI)	|cypress-results | raw test data   |
+|---------------|----------------|-----------------|
+|Newman (API)	|newman-report	 | HTML            |
+
+You can also run the API tests manually and open the HTML report locally:
+
 ```bash
-npm i -D @shelex/cypress-allure-plugin
-npm i -g allure-commandline
+newman run api/Reqres.postman_collection.json ^
+  -e api/sandbox-local.postman_environment.json ^
+  -r cli,html ^
+  --reporter-html-export newman/report.html
+
+start newman\report.html
 ```

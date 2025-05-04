@@ -6,4 +6,5 @@ dev-notes.md
 .env
 allure-results
 allure-report
+_allure-report/
 newman/allure-report

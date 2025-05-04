@@ -42,9 +42,11 @@ jobs:
     - name: Run Newman tests
       run: |
         npm i -g newman
+        mkdir -p newman
         newman run api/Reqres.postman_collection.json \
           -e api/sandbox-local.postman_environment.json \
-          -r cli,html --reporter-html-export newman/report.html
+          -r cli,html \
+          --reporter-html-export newman/report.html
 
     - name: Upload Newman report
       uses: actions/upload-artifact@v4
